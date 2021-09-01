@@ -4,8 +4,12 @@ Then importing gspread
 """
 import gspread
 
-# Then Used this line to access Credentials class
+# Then used this line to access Credentials class
 from google.oauth2.service_account import Credentials
+
+# Installing pprint to show data in more readable format
+from pprint import pprint
+
 
 # Here we use constant SCOPE (constants written in CAPITAL LETTERS) to access certain google services
 SCOPE = [
@@ -86,9 +90,37 @@ def update_sales_worksheet(data):
     sales_worksheet.append_row(data)
     print("Sales worksheet updated successfully.\n")
 
+def calculate_surplus_data(sales_row):
+    """
+    Compare sales with stock and calculate the surplus for each item type.
 
-data = get_sales_data()
-sales_data = [int(num) for num in data]
-update_sales_worksheet(sales_data)
+    The surplus is defined as the sales figure subtracted from the stock:
+    - Positive surplus indicates waste.
+    - Negative surplus indicates extra made when stock ran out.
+    """
+    print("Calculating surplus data...\n")
+    stock = SHEET.worksheet("stock").get_all_values()
+    stock_row = stock[-1]
+    print(stock_row)
 
+
+
+
+
+
+
+
+def main():
+    """
+    Run all program functions
+    """
+    data = get_sales_data()
+    sales_data = [int(num) for num in data]
+    update_sales_worksheet(sales_data)
+    calculate_surplus_data(sales_data)
+
+
+# Calling main() function
+print("Welcome to Love Sandwiches Data Automation!\n")
+main()
 
