@@ -176,4 +176,19 @@ def main():
 
 # Calling main() function
 print("Welcome to Love Sandwiches Data Automation!\n")
-main()
+stock_data = main()
+
+def get_stock_values(data):
+    """
+    Show last stock data together with heading names.
+    """
+    headings = SHEET.worksheet("stock").row_values(1)
+    new_data = {}
+    for heading, stock_num in zip(headings, data):
+        new_data[heading] = stock_num
+    return new_data
+
+
+
+stock_data = get_stock_values(stock_data)
+print(stock_data)
