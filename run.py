@@ -173,20 +173,18 @@ def main():
     stock_data = calculate_stock_data(sales_columns)
     print(f"{stock_data}\n")
     update_worksheet(stock_data, "stock")
-
+    return stock_data
+    
 # Calling main() function
 print("Welcome to Love Sandwiches Data Automation!\n")
 stock_data = main()
 
 def get_stock_values(data):
     """
-    Show last stock data together with heading names.
+    Print out the calculated stock numbers for each sandwich type.
     """
-    headings = SHEET.worksheet("stock").row_values(1)
-    new_data = {}
-    for heading, stock_num in zip(headings, data):
-        new_data[heading] = stock_num
-    return new_data
+    headings = SHEET.worksheet("stock").get_all_values()[0]
+    return {heading: data for heading, data in zip(headings, data)}
 
 
 
